@@ -1,0 +1,24 @@
+{
+	"name": "@demo/app",
+	"version": "1.0.0",
+	"type": "module",
+	"scripts": {
+		"test": "vitest",
+		"test:run": "vitest run"
+	},
+	"dependencies": {
+		"@demo/lib": "file:../lib/package.tgz",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^6.1.4",
+		"@testing-library/react": "^14.0.0",
+		"@types/react": "^18.2.29",
+		"@types/react-dom": "^18.2.20",
+		"jsdom": "^22.1.0",
+		"typescript": "^5.9.3",
+		"vite": "^6.0.11",
+		"vitest": "^4.0.18"
+	}
+}
