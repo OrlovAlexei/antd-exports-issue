@@ -14,7 +14,7 @@ Antd does not have an `exports` field in its `package.json`. This causes errors 
 
 ```
 packages/
-├── lib/          # Library that re-exports antd
+├── lib/          # Library that re-exports antd (simulates published npm package)
 │   └── src/
 │       └── index.ts   # export { default as Search } from 'antd/es/input/Search'
 └── app/          # Application with tests (consumes the library)
@@ -23,7 +23,7 @@ packages/
         └── App.spec.tsx
 ```
 
-**Key point**: The `@demo/lib` library imports a component from an antd subpath (`antd/es/input/Search`). When the library is compiled and installed from a tarball (simulating npm install), Yarn PnP fails to resolve the subpath because antd lacks an `exports` field.
+**Key point**: The `@demo/lib` library imports a component from an antd subpath (`antd/es/input/Search`). When the library is installed from a tarball (simulating npm install), Yarn PnP fails to resolve the subpath because antd lacks an `exports` field.
 
 ## Requirements
 
@@ -35,7 +35,7 @@ packages/
 ### 1. Clone the repository
 
 ```bash
-git clone <url>
+git clone https://github.com/OrlovAlexei/antd-exports-issue.git
 cd antd-exports-issue
 ```
 
@@ -97,6 +97,7 @@ Not found: .../antd/es/input/Search
 
 - The issue **only reproduces** when the library is installed from tarball/npm, not with `workspace:*`
 - With `workspace:*`, Vite handles the resolution differently and the error doesn't occur
+- This matches real-world usage where libraries are published to npm
 
 ## Suggested Solution
 
@@ -111,7 +112,8 @@ Add an `exports` field to antd's `package.json`:
       "types": "./es/index.d.ts"
     },
     "./es/*": "./es/*",
-    "./lib/*": "./lib/*"
+    "./lib/*": "./lib/*",
+    "./locale/*": "./locale/*"
   }
 }
 ```
